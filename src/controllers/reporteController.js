@@ -1,12 +1,20 @@
+const jwt = require('jsonwebtoken');
 const Reporte = require('../models/Reporte');
 
-// Crear un nuevo reporte
 exports.crearReporte = async (req, res) => {
   try {
-    const { usuario_id, tipo_problema, descripcion, ubicacion, imagenes } = req.body;
+    // Decodifica el token para obtener el usuario_id
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const usuario_id = decoded.id;
+
+    const { tipo_problema, descripcion, ubicacion, imagenes } = req.body;
+    console.log("Datos recibidos:", req.body);
+    console.log("Token decodificado:", decoded);
+
 
     const nuevoReporte = new Reporte({
-      usuario_id,
+      usuario_id, // Se asigna desde el token
       tipo_problema,
       descripcion,
       ubicacion,
@@ -17,9 +25,11 @@ exports.crearReporte = async (req, res) => {
     await nuevoReporte.save();
     res.status(201).json({ mensaje: 'Reporte creado exitosamente', reporte: nuevoReporte });
   } catch (error) {
+    console.error("Error al crear el reporte:", error);
     res.status(500).json({ error: 'Error al crear el reporte' });
   }
 };
+
 
 // Consultar todos los reportes
 exports.obtenerReportes = async (req, res) => {

@@ -52,12 +52,14 @@ exports.iniciarSesion = async (req, res) => {
     // Enviar la respuesta con los datos del usuario
     res.status(200).json({
       token,
+      usuario_id: usuario._id,
       tipo_usuario: usuario.tipo_usuario,
       nombre: usuario.nombre, // Asegúrate de incluir el nombre
     });
 
     console.log("Inicio de sesión exitoso:", {
       token,
+      usuario_id: usuario._id,
       tipo_usuario: usuario.tipo_usuario,
       nombre: usuario.nombre,
     });
