@@ -7,9 +7,11 @@ const estadisticaRoutes = require('./routes/estadisticaRoutes');
 const app = express();
 
 // Configuración de CORS
+app.options('*', cors());
+
 app.use(cors({
-    origin: 'http://localhost:3000', // Permite solicitudes desde el frontend
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: '*', // Permite solicitudes desde el frontend
+    methods: ['GET', 'POST', 'PUT', 'PATCH','DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
 }));
 

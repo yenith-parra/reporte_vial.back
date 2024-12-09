@@ -22,7 +22,10 @@ exports.registrarUsuario = async (req, res) => {
     });
 
     await nuevoUsuario.save();
-    res.status(201).json({ mensaje: 'Usuario registrado correctamente' });
+    
+    res.status(201).json({ mensaje: 'Usuario registrado correctamente', nombre});
+    console.log("Registro exitoso:", res.body);
+    
   } catch (error) {
     console.log('Error detallado:', error); // Más detalles del error en la consola
     res.status(500).json({ error: 'Error al registrar usuario' });
@@ -54,7 +57,7 @@ exports.iniciarSesion = async (req, res) => {
       token,
       usuario_id: usuario._id,
       tipo_usuario: usuario.tipo_usuario,
-      nombre: usuario.nombre, // Asegúrate de incluir el nombre
+      nombre: usuario.nombre, 
     });
 
     console.log("Inicio de sesión exitoso:", {
